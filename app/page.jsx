@@ -1,63 +1,44 @@
 import Link from 'next/link';
-import { Card } from 'components/card';
-import { ContextAlert } from 'components/context-alert';
-import { Markdown } from 'components/markdown';
-import { RandomQuote } from 'components/random-quote';
-import { getNetlifyContext } from 'utils';
-
-const contextExplainer = `
-The card below is rendered on the server based on the value of \`process.env.CONTEXT\` 
-([docs](https://docs.netlify.com/configure-builds/environment-variables/#build-metadata)):
-`;
-
-const preDynamicContentExplainer = `
-The card content below is fetched by the client-side from \`/quotes/random\` (see file \`app/quotes/random/route.js\`) with a different quote shown on each page load:
-`;
-
-const ctx = getNetlifyContext();
 
 export default function Page() {
     return (
-        <div className="flex flex-col gap-12 sm:gap-16">
-            <section>
-                <ContextAlert className="mb-6" />
-                <h1 className="mb-4">Netlify Platform Starter – Next.js</h1>
-                <p className="mb-6 text-lg">
-                    Deploy the latest version of Next.js — including Turbopack, React Compiler, and the new caching APIs
-                    — on Netlify in seconds. No configuration or custom adapter required.
+        <div className="flex flex-col items-center justify-center min-h-[70vh] text-center">
+            <section className="flex flex-col items-center gap-8">
+                <h1 className="text-5xl sm:text-7xl font-bold tracking-tight">
+                    Six Degrees of History
+                </h1>
+                <p className="text-xl sm:text-2xl text-neutral-300 max-w-2xl">
+                    Connect historical figures through their relationships, events, and shared moments in time.
                 </p>
-                <Link href="https://docs.netlify.com/frameworks/next-js/overview/" className="btn btn-lg sm:min-w-64">
-                    Read the Docs
+                <Link
+                    href="/play"
+                    className="btn text-2xl sm:text-3xl px-12 py-6 rounded-lg mt-4 hover:scale-105 transition-transform"
+                >
+                    Play
                 </Link>
             </section>
-            {!!ctx && (
-                <section className="flex flex-col gap-4">
-                    <Markdown content={contextExplainer} />
-                    <RuntimeContextCard />
-                </section>
-            )}
-            <section className="flex flex-col gap-4">
-                <Markdown content={preDynamicContentExplainer} />
-                <RandomQuote />
+
+            <section className="mt-16 max-w-2xl text-left">
+                <h2 className="text-2xl font-bold mb-6 text-center">How to Play</h2>
+                <div className="space-y-4 text-neutral-300">
+                    <div className="flex gap-4 items-start">
+                        <span className="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-primary-content flex items-center justify-center font-bold">1</span>
+                        <p>You will be given two historical figures from different eras or regions.</p>
+                    </div>
+                    <div className="flex gap-4 items-start">
+                        <span className="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-primary-content flex items-center justify-center font-bold">2</span>
+                        <p>Find a chain of connections between them through shared events, relationships, or influences.</p>
+                    </div>
+                    <div className="flex gap-4 items-start">
+                        <span className="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-primary-content flex items-center justify-center font-bold">3</span>
+                        <p>The goal is to connect them in six degrees or fewer. The shorter the chain, the higher your score!</p>
+                    </div>
+                    <div className="flex gap-4 items-start">
+                        <span className="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-primary-content flex items-center justify-center font-bold">4</span>
+                        <p>Each connection must be historically accurate and verifiable.</p>
+                    </div>
+                </div>
             </section>
         </div>
     );
-}
-
-function RuntimeContextCard() {
-    const title = `Netlify Context: running in ${ctx} mode.`;
-    if (ctx === 'dev') {
-        return (
-            <Card title={title}>
-                <p>Next.js will rebuild any page you navigate to, including static pages.</p>
-            </Card>
-        );
-    } else {
-        const now = new Date().toISOString();
-        return (
-            <Card title={title}>
-                <p>This page was statically-generated at build time ({now}).</p>
-            </Card>
-        );
-    }
 }
