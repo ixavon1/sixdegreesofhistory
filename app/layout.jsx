@@ -4,9 +4,10 @@ import { Header } from '../components/header';
 
 export const metadata = {
     title: {
-        template: '%s | Netlify',
-        default: 'Netlify Starter'
-    }
+        template: '%s | Six Degrees of History',
+        default: 'Six Degrees of History'
+    },
+    description: 'Connect historical figures through their relationships, events, and shared moments in time.'
 };
 
 export default function RootLayout({ children }) {
